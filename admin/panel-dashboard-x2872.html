@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard | Sider Lehenga</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="admin.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  if (localStorage.getItem("adminAuth") !== "true") {
+    location.href = "panel-auth-9x72.html";
+  }
+</script>
+</head>
+
+<body>
+
+<header class="admin-header">
+  <div class="brand">SIDER LEHENGA</div>
+  <button onclick="logout()">Logout</button>
+</header>
+
+<main class="admin-container">
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat-card">
+      <h3>Total Orders</h3>
+      <p id="totalOrders">0</p>
+    </div>
+    <div class="stat-card">
+      <h3>Total Revenue</h3>
+      <p id="totalRevenue">₹0</p>
+    </div>
+    <div class="stat-card">
+      <h3>Total Products</h3>
+      <p id="totalProducts">0</p>
+    </div>
+    <div class="stat-card">
+      <h3>Hidden Products</h3>
+      <p id="hiddenProducts">0</p>
+    </div>
+  </section>
+
+  <!-- GRAPHS -->
+  <section class="charts">
+    <div class="chart-card">
+      <h3>Orders Over Time</h3>
+      <canvas id="ordersChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3>Revenue Overview</h3>
+      <canvas id="revenueChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3>Order Status</h3>
+      <canvas id="statusChart"></canvas>
+    </div>
+  </section>
+
+  <!-- ORDERS -->
+  <section>
+    <h2>Orders</h2>
+    <div id="orders" class="orders-grid"></div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section>
+    <h2>Products Control</h2>
+    <div id="products" class="products-grid"></div>
+  </section>
+
+</main>
+
+<footer class="admin-footer">
+  © 2025 Sider Lehenga • Admin Dashboard
+</footer>
+
+<script src="admin.js"></script>
+</body>
+</html>
