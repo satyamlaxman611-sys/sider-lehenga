@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cart | Sider Lehenga</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#0b0b0b;
+  --card:#111;
+  --soft:#181818;
+  --gold:#f5c97a;
+  --gold-soft:rgba(245,201,122,.35);
+  --text:#f5f5f5;
+  --muted:#bdbdbd;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* ===== HEADER ===== */
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:#000;
+  padding:14px 16px;
+  border-bottom:1px solid var(--gold-soft);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-weight:800;
+  letter-spacing:1px;
+  color:var(--gold);
+  cursor:pointer;
+}
+
+.back{
+  cursor:pointer;
+  color:var(--gold);
+}
+
+/* ===== LAYOUT ===== */
+.container{
+  max-width:480px;
+  margin:auto;
+  padding:16px;
+}
+
+/* ===== CART ITEM ===== */
+.item{
+  background:var(--card);
+  border:1px solid var(--gold-soft);
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:14px;
+  display:flex;
+  gap:12px;
+}
+
+.item img{
+  width:90px;
+  height:120px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.item-info{
+  flex:1;
+}
+
+.item-title{
+  font-size:14px;
+  line-height:1.4;
+  margin-bottom:6px;
+}
+
+.item-price{
+  color:var(--gold);
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+/* ===== QTY ===== */
+.qty{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.qty button{
+  width:28px;
+  height:28px;
+  border-radius:6px;
+  border:1px solid var(--gold-soft);
+  background:transparent;
+  color:var(--gold);
+  font-size:16px;
+  cursor:pointer;
+}
+
+.remove{
+  font-size:12px;
+  color:#ff6b6b;
+  margin-top:6px;
+  cursor:pointer;
+}
+
+/* ===== TOTAL ===== */
+.total-box{
+  background:var(--card);
+  border:1px solid var(--gold-soft);
+  border-radius:14px;
+  padding:16px;
+  margin-top:20px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
+  font-size:14px;
+}
+
+.total{
+  font-size:18px;
+  font-weight:800;
+  color:var(--gold);
+}
+
+/* ===== BUTTON ===== */
+.checkout-btn{
+  width:100%;
+  padding:16px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:800;
+  background:var(--gold);
+  color:#000;
+  border:none;
+  cursor:pointer;
+  margin-top:16px;
+}
+
+.checkout-btn:active{
+  transform:scale(.98);
+}
+
+/* ===== EMPTY ===== */
+.empty{
+  text-align:center;
+  margin-top:60px;
+  color:var(--muted);
+}
+
+/* ===== FOOTER ===== */
+footer{
+  text-align:center;
+  padding:20px;
+  font-size:13px;
+  color:#888;
+  border-top:1px solid var(--gold-soft);
+  margin-top:40px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="back" onclick="history.back()">←</div>
+  <div class="logo" onclick="location.href='index.html'">SIDER LEHENGA</div>
+</header>
+
+<main class="container">
+
+  <div id="cartWrap"></div>
+
+  <div id="totalBox" class="total-box" style="display:none;">
+    <div class="row">
+      <span>Total</span>
+      <span id="totalPrice">₹0</span>
+    </div>
+    <button class="checkout-btn" onclick="goCheckout()">PROCEED TO CHECKOUT</button>
+  </div>
+
+</main>
+
+<footer>
+  © 2025 Sider Lehenga • Your Cart
+</footer>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+const wrap = document.getElementById("cartWrap");
+const totalBox = document.getElementById("totalBox");
+const totalPrice = document.getElementById("totalPrice");
+
+function renderCart(){
+  wrap.innerHTML = "";
+  let total = 0;
+
+  if(cart.length === 0){
+    wrap.innerHTML = `<div class="empty">Your cart is empty</div>`;
+    totalBox.style.display = "none";
+    return;
+  }
+
+  cart.forEach((item, index)=>{
+    const qty = item.qty || 1;
+    total += item.price * qty;
+
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `
+      <img src="${item.image}">
+      <div class="item-info">
+        <div class="item-title">${item.title}</div>
+        <div class="item-price">₹${item.price}</div>
+
+        <div class="qty">
+          <button onclick="changeQty(${index}, -1)">−</button>
+          <span>${qty}</span>
+          <button onclick="changeQty(${index}, 1)">+</button>
+        </div>
+
+        <div class="remove" onclick="removeItem(${index})">Remove</div>
+      </div>
+    `;
+    wrap.appendChild(div);
+  });
+
+  totalPrice.innerText = "₹" + total;
+  totalBox.style.display = "block";
+}
+
+function changeQty(index, diff){
+  cart[index].qty = (cart[index].qty || 1) + diff;
+  if(cart[index].qty <= 0) cart[index].qty = 1;
+  save();
+}
+
+function removeItem(index){
+  cart.splice(index,1);
+  save();
+}
+
+function save(){
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+function goCheckout(){
+  location.href = "checkout.html";
+}
+
+renderCart();
+</script>
+
+</body>
+</html>

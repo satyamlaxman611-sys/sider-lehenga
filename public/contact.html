@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact Us | Sider Lehenga</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#0b0b0b;
+  --card:#121212;
+  --gold:#f5c97a;
+  --gold-soft:rgba(245,201,122,.35);
+  --gold-glow:rgba(245,201,122,.55);
+  --text:#f5f5f5;
+  --muted:#bdbdbd;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,sans-serif;
+  background:
+    radial-gradient(60% 40% at top, #1a1a1a, #000 70%);
+  color:var(--text);
+}
+
+/* HEADER */
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:#000;
+  padding:14px 16px;
+  border-bottom:1px solid var(--gold-soft);
+  display:flex;
+  align-items:center;
+}
+
+.logo{
+  font-weight:800;
+  letter-spacing:1px;
+  color:var(--gold);
+  text-shadow:0 0 14px var(--gold-glow);
+  cursor:pointer;
+}
+
+/* LAYOUT */
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:28px 16px 60px;
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  margin-bottom:32px;
+}
+
+.hero h1{
+  font-size:28px;
+  margin:0 0 6px;
+  color:var(--gold);
+}
+
+.hero p{
+  margin:0;
+  font-size:14px;
+  color:var(--muted);
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:18px;
+}
+
+/* CARD */
+.card{
+  background:
+    linear-gradient(145deg, rgba(18,18,18,.95), rgba(8,8,8,.95));
+  border:1px solid var(--gold-soft);
+  border-radius:18px;
+  padding:20px;
+  backdrop-filter:blur(14px);
+  box-shadow:
+    0 18px 45px rgba(0,0,0,.8),
+    inset 0 0 25px rgba(255,215,120,.05);
+  transition:.3s ease;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:
+    0 28px 65px rgba(0,0,0,.9),
+    0 0 22px rgba(245,201,122,.25);
+}
+
+.card h2{
+  margin:0 0 10px;
+  font-size:18px;
+  color:var(--gold);
+}
+
+.card p{
+  margin:6px 0;
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.card a{
+  display:inline-block;
+  margin-top:12px;
+  padding:12px 16px;
+  border-radius:10px;
+  font-weight:700;
+  font-size:14px;
+  text-decoration:none;
+  border:1px solid var(--gold);
+  color:var(--gold);
+  transition:.25s;
+}
+
+.card a:hover{
+  background:var(--gold);
+  color:#000;
+  box-shadow:0 0 20px rgba(245,201,122,.5);
+}
+
+/* ADDRESS SECTION */
+.address{
+  margin-top:42px;
+}
+
+.address .card{
+  text-align:center;
+}
+
+/* FOOTER */
+footer{
+  margin-top:60px;
+  padding:26px 16px;
+  border-top:1px solid var(--gold-soft);
+  text-align:center;
+  font-size:13px;
+  color:#9a9a9a;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo" onclick="location.href='index.html'">SIDER LEHENGA</div>
+</header>
+
+<main class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Get in Touch</h1>
+    <p>Connect with us through your preferred platform</p>
+  </section>
+
+  <!-- CONTACT GRID -->
+  <section class="grid">
+
+    <div class="card">
+      <h2>Email</h2>
+      <p>support@siderlehenga.com</p>
+      <a href="mailto:satyamlaxman611@gmail.com">Send Email</a>
+    </div>
+
+    <div class="card">
+      <h2>WhatsApp</h2>
+      <p>Quick support & order queries</p>
+      <a href="https://wa.me/917359978388" target="_blank">Chat on WhatsApp</a>
+    </div>
+
+    <div class="card">
+      <h2>Instagram</h2>
+      <p>Follow Us </p>
+      <a href="https://www.instagram.com/_sider_lehenga_?igsh=YjRvYzJpc3RiMGZx" target="_blank">
+        Visit Instagram
+      </a>
+    </div>
+
+    <div class="card">
+      <h2>Facebook</h2>
+      <p>Sider Lehenga Official</p>
+      <a href="https://www.facebook.com/share/16qMTJgZte/" target="_blank">
+        Visit Facebook
+      </a>
+    </div>
+
+    <div class="card">
+      <h2>YouTube</h2>
+      <p>Fashion & Collection Videos</p>
+      <a href="https://youtube.com/@siderlehenga?si=Rpx66PR_jDIwWWwY" target="_blank">
+        Visit YouTube
+      </a>
+    </div>
+
+    <div class="card">
+      <h2>Pinterest</h2>
+      <p>Design inspiration & styles</p>
+      <a href="https://pin.it/5F7y0LVf3" target="_blank">
+        Visit Pinterest
+      </a>
+    </div>
+
+  </section>
+
+  <!-- ADDRESS -->
+  <section class="address">
+    <div class="card">
+      <h2>Official Address</h2>
+      <p>
+        Narayan Nagar Industrial Estate 1,<br>
+        Parvat Gam,<br>
+        Surat, Gujarat – 395012
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2025 Sider Lehenga • Premium Ethnic Wear
+</footer>
+
+</body>
+</html>

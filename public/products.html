@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Explore Lehengas | Sider Lehenga</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+
+<header>
+  <div class="logo" onclick="location.href='index.html'">SIDER LEHENGA</div>
+  <div class="header-right">
+    <div class="cart-btn" onclick="location.href='cart.html'">🛒</div>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  </div>
+</header>
+
+<div id="menu">
+  <div onclick="location.href='index.html'">Home</div>
+
+  <div onclick="location.href='cart.html'">Cart</div>
+  <div onclick="location.href='about.html'">About Us</div>
+  <div onclick="location.href='terms.html'">Terms & Conditions</div>
+</div>
+
+<main class="container">
+
+  <h1 class="page-title">Explore Premium Lehengas</h1>
+
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="🔍 Search lehengas..." oninput="filterProducts()">
+    <select onchange="sortProducts(this.value)">
+      <option value="">Sort By</option>
+      <option value="low">Price: Low → High</option>
+      <option value="high">Price: High → Low</option>
+      <option value="new">Newest First</option>
+    </select>
+  </div>
+
+  <div id="loadingState" class="loading">
+    <div class="spinner"></div>
+    <div>Loading beautiful lehengas...</div>
+  </div>
+
+  <div class="grid" id="productGrid"></div>
+
+  <div id="emptyState" class="empty-state" style="display:none">
+    <div class="empty-state-icon">🔍</div>
+    <h3>No products found</h3>
+    <p>Try adjusting your search or filters</p>
+  </div>
+
+  <h2 class="section-title">✨ Featured Collection</h2>
+  <div class="horizontal-scroll" id="featuredStrip"></div>
+  
+  <div class="explore-more">
+    <button onclick="scrollToTop()">Back to Top ↑</button>
+  </div>
+
+</main>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-close" onclick="closeLightbox()">✕</div>
+  <div class="lightbox-nav lightbox-prev" onclick="event.stopPropagation();changeLightboxImage(-1)">‹</div>
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <img id="lightboxImg" src="" alt="">
+  </div>
+  <div class="lightbox-nav lightbox-next" onclick="event.stopPropagation();changeLightboxImage(1)">›</div>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="about.html">About Us</a>
+      <a href="terms.html">Terms & Conditions</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div>© 2025 Sider Lehenga • Premium Ethnic Wear • Made in India 🇮🇳</div>
+  </div>
+</footer>
+
+<script>
+let allProducts = [];
+let filteredProducts = [];
+let currentLightboxImages = [];
+let currentLightboxIndex = 0;
+
+async function loadProducts(){
+  try {
+    const res = await fetch("products-data.json");
+    const data = await res.json();
+
+    allProducts = data.filter(p => p.visible !== false);
+    filteredProducts = [...allProducts];
+
+    document.getElementById("loadingState").style.display = "none";
+    
+    renderProducts(filteredProducts);
+    loadFeatured(allProducts);
+  } catch(err) {
+    document.getElementById("loadingState").innerHTML = `
+      <div style="color:#ff6b6b">❌ Failed to load products</div>
+      <button onclick="location.reload()" style="margin-top:20px;padding:10px 20px;background:var(--gold-main);border:none;border-radius:6px;cursor:pointer">Retry</button>
+    `;
+  }
+}
+
+function renderProducts(list){
+  const grid = document.getElementById("productGrid");
+  const emptyState = document.getElementById("emptyState");
+  
+  grid.innerHTML = "";
+
+  if(list.length === 0){
+    emptyState.style.display = "block";
+    return;
+  }
+  
+  emptyState.style.display = "none";
+
+  list.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+    
+    // Image Slider Wrapper
+    const sliderWrapper = document.createElement("div");
+    sliderWrapper.className = "img-slider-wrapper";
+    
+    const slider = document.createElement("div");
+    slider.className = "img-slider";
+    slider.dataset.currentIndex = 0;
+    
+    // Add images
+    p.images.forEach((img, idx) => {
+      const imgEl = document.createElement("img");
+      imgEl.src = img;
+      imgEl.alt = p.title;
+      imgEl.loading = "lazy";
+      imgEl.draggable = false;
+      imgEl.onclick = (e) => {
+        e.stopPropagation();
+        openLightbox(p.images, idx);
+      };
+      slider.appendChild(imgEl);
+    });
+    
+    // Dots indicator
+    const dotsDiv = document.createElement("div");
+    dotsDiv.className = "slider-dots";
+    p.images.forEach((_, idx) => {
+      const dot = document.createElement("div");
+      dot.className = idx === 0 ? "dot active" : "dot";
+      dotsDiv.appendChild(dot);
+    });
+    
+    sliderWrapper.appendChild(slider);
+    if(p.images.length > 1){
+      sliderWrapper.appendChild(dotsDiv);
+    }
+    
+    // Touch/Swipe events
+    let startX = 0, currentX = 0, isDragging = false;
+    
+    slider.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+      slider.style.transition = "none";
+    });
+    
+    slider.addEventListener("touchmove", (e) => {
+      if(!isDragging) return;
+      currentX = e.touches[0].clientX;
+      const diff = currentX - startX;
+      const currentIndex = parseInt(slider.dataset.currentIndex);
+      const offset = -(currentIndex * 100) + (diff / slider.offsetWidth * 100);
+      slider.style.transform = `translateX(${offset}%)`;
+    });
+    
+    slider.addEventListener("touchend", (e) => {
+      if(!isDragging) return;
+      isDragging = false;
+      
+      slider.style.transition = "transform 0.3s ease";
+      const diff = startX - currentX;
+      const threshold = 50;
+      
+      if(Math.abs(diff) > threshold){
+        let currentIndex = parseInt(slider.dataset.currentIndex);
+        
+        if(diff > 0 && currentIndex < p.images.length - 1){
+          currentIndex++;
+        } else if(diff < 0 && currentIndex > 0){
+          currentIndex--;
+        }
+        
+        slider.dataset.currentIndex = currentIndex;
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        const dots = dotsDiv.querySelectorAll(".dot");
+        dots.forEach((d, i) => {
+          d.className = i === currentIndex ? "dot active" : "dot";
+        });
+      } else {
+        const currentIndex = parseInt(slider.dataset.currentIndex);
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+      }
+    });
+    
+    // Card Body
+    const cardBody = document.createElement("div");
+    cardBody.className = "card-body";
+    cardBody.onclick = () => location.href = `product.html?id=${p.id}`;
+    
+    const discount = p.comparePrice ? Math.round((1 - p.price/p.comparePrice) * 100) : 0;
+    
+    cardBody.innerHTML = `
+      <div class="card-title">${p.title}</div>
+      <div class="price-row">
+        <span class="price">₹${p.price.toLocaleString('en-IN')}</span>
+        ${p.comparePrice ? `<span class="compare">₹${p.comparePrice.toLocaleString('en-IN')}</span>` : ""}
+        ${discount > 0 ? `<span class="discount-badge">${discount}% OFF</span>` : ""}
+      </div>
+    `;
+    
+    card.appendChild(sliderWrapper);
+    card.appendChild(cardBody);
+    grid.appendChild(card);
+  });
+}
+
+function openLightbox(images, index){
+  currentLightboxImages = images;
+  currentLightboxIndex = index;
+  updateLightboxImage();
+  document.getElementById("lightbox").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox(){
+  document.getElementById("lightbox").classList.remove("active");
+  document.body.style.overflow = "auto";
+}
+
+function changeLightboxImage(direction){
+  currentLightboxIndex += direction;
+  
+  if(currentLightboxIndex < 0){
+    currentLightboxIndex = currentLightboxImages.length - 1;
+  }
+  if(currentLightboxIndex >= currentLightboxImages.length){
+    currentLightboxIndex = 0;
+  }
+  
+  updateLightboxImage();
+}
+
+function updateLightboxImage(){
+  document.getElementById("lightboxImg").src = currentLightboxImages[currentLightboxIndex];
+  document.getElementById("lightboxCounter").textContent = `${currentLightboxIndex + 1} / ${currentLightboxImages.length}`;
+}
+
+function filterProducts(){
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  filteredProducts = allProducts.filter(p => 
+    p.title.toLowerCase().includes(q) || 
+    (p.description && p.description.toLowerCase().includes(q))
+  );
+  renderProducts(filteredProducts);
+}
+
+function sortProducts(type){
+  let list = [...filteredProducts];
+  
+  if(type === "low"){
+    list.sort((a,b) => a.price - b.price);
+  } else if(type === "high"){
+    list.sort((a,b) => b.price - a.price);
+  } else if(type === "new"){
+    list.sort((a,b) => (b.id || 0) - (a.id || 0));
+  }
+  
+  renderProducts(list);
+}
+
+function loadFeatured(products){
+  const strip = document.getElementById("featuredStrip");
+  const shuffled = [...products].sort(() => Math.random() - 0.5);
+  
+  shuffled.slice(0, 12).forEach(p => {
+    const card = document.createElement("div");
+    card.className = "mini-card";
+    card.onclick = () => location.href = `product.html?id=${p.id}`;
+    card.innerHTML = `
+      <img src="${p.images[0]}" alt="${p.title}" loading="lazy">
+      <div>${p.title.slice(0, 45)}${p.title.length > 45 ? '...' : ''}</div>
+    `;
+    strip.appendChild(card);
+  });
+}
+
+function toggleMenu(){
+  const m = document.getElementById("menu");
+  m.style.display = m.style.display === "block" ? "none" : "block";
+}
+
+function scrollToTop(){
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Keyboard navigation
+document.addEventListener("keydown", (e) => {
+  const lightbox = document.getElementById("lightbox");
+  if(!lightbox.classList.contains("active")) return;
+  
+  if(e.key === "Escape") closeLightbox();
+  if(e.key === "ArrowLeft") changeLightboxImage(-1);
+  if(e.key === "ArrowRight") changeLightboxImage(1);
+});
+
+// Close menu on outside click
+document.addEventListener("click", (e) => {
+  const menu = document.getElementById("menu");
+  const menuBtn = document.querySelector(".menu-btn");
+  
+  if(menu.style.display === "block" && !menu.contains(e.target) && e.target !== menuBtn){
+    menu.style.display = "none";
+  }
+});
+
+loadProducts();
+</script>
+
+</body>
+</html>
