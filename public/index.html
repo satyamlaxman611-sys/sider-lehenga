@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sider Lehenga | Premium Lehengas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="logo">SIDER LEHENGA</div>
+
+  <div class="header-right">
+    <div class="cart" onclick="location.href='cart.html'">🛒</div>
+    <div class="menu" onclick="toggleMenu()">☰</div>
+  </div>
+</header>
+
+<!-- ================= TOGGLE MENU ================= -->
+<div id="navMenu" class="nav-menu hidden">
+  <div onclick="location.href='products.html'">All Products</div>
+  <div onclick="location.href='cart.html'">Cart</div>
+  <div onclick="location.href='terms.html'">Terms & Conditions</div>
+  <div onclick="location.href='contact.html'">Contact Us</div>
+  <div onclick="location.href='about-developer.html'">About The Developer</div>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="assets/videos/Sider Lehenga.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-overlay">
+    <h1>Premium Lehengas</h1>
+    <p>Lowest Price • Best Quality</p>
+    <button onclick="location.href='products.html'">
+      Explore Lehengas
+    </button>
+  </div>
+</section>
+
+<!-- ================= HORIZONTAL PRODUCTS ================= -->
+<section class="section">
+  <h2>Trending Lehengas</h2>
+
+  <div class="horizontal-scroll" id="horizontalProducts">
+    <!-- JS injects cards -->
+  </div>
+</section>
+
+<!-- ================= VERTICAL PRODUCTS ================= -->
+<section class="section">
+  <h2>New Arrivals</h2>
+
+  <div class="vertical-list" id="verticalProducts">
+    <!-- JS injects cards -->
+  </div>
+
+  <button class="explore-all" onclick="location.href='products.html'">
+    Explore All Products
+  </button>
+</section>
+<section class="owner-section">
+  <div class="owner-card" id="ownerCard">
+    
+  
+
+    <div class="owner-info">
+      <h2>Abrar Khan</h2>
+      <p class="role">Developer · Sider Lehenga</p>
+      <p class="email">Tap for More Info</p>
+    </div>
+
+    <div class="gold-line"></div>
+
+  </div>
+</section>
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  © 2025 Sider Lehenga • Premium Ethnic Wear
+</footer>
+
+<!-- JS -->
+<script src="js/index.js"></script>
+</body>
+</html>
