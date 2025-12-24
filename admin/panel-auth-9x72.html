@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Login | Sider Lehenga</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="admin.css">
+
+<script>
+  /* Already logged in? → dashboard */
+  if (localStorage.getItem("adminAuth") === "true") {
+    location.href = "panel-dashboard-x2872.html";
+  }
+</script>
+</head>
+
+<body class="auth-body">
+
+<div class="login-wrapper">
+
+  <div class="login-card">
+    <h1>Admin Access</h1>
+    <p class="subtitle">Sider Lehenga Dashboard</p>
+
+    <input id="username" placeholder="Username" autocomplete="off">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+
+    <p id="error" class="error"></p>
+  </div>
+
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
