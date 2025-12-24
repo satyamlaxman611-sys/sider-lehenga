@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Developer | Abrar Khan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  :root{
+  /* ===== DEEP BLACK BACKGROUND ===== */
+  --bg-main:#000000;
+  --bg-deep:#000000;
+  --bg-accent:#0a0a0a;
+
+  /* ===== PREMIUM GLASS ===== */
+  --glass-bg:rgba(255,255,255,0.03);
+  --glass-border:rgba(255,255,255,0.12);
+  --glass-shadow:rgba(0,0,0,0.8);
+
+  /* ===== NEON COLORS ===== */
+  --neon-purple:#b26cff;
+  --neon-pink:#ff4ecd;
+  --neon-cyan:#3befff;
+
+  --text-main:#f5f5f7;
+  --text-muted:#9a9aa8;
+}
+
+/* ================== GLOBAL ================== */
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:system-ui,-apple-system,Segoe UI,sans-serif;
+  color:var(--text-main);
+  background:#000000;
+  overflow-x:hidden;
+}
+
+/* ================== 3D CARD BASE ================== */
+.card-section{
+  max-width:1100px;
+  margin:40px auto;
+  padding:28px 18px;
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,0.04),
+      rgba(255,255,255,0.01)
+    );
+  border:1px solid var(--glass-border);
+  border-radius:24px;
+  backdrop-filter:blur(20px);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.9),
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 0 0 1px rgba(0,0,0,0.5);
+  transform-style:preserve-3d;
+  transition:all 0.4s cubic-bezier(0.23,1,0.32,1);
+}
+
+.card-section:hover{
+  transform:translateY(-5px);
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.95),
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    0 0 0 1px rgba(178,108,255,0.3);
+}
+
+/* ================== HERO CARD ================== */
+.hero{
+  min-height:78vh;
+  padding:48px 18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:clamp(42px,8vw,74px);
+  font-weight:900;
+  margin:0;
+  background:linear-gradient(90deg,var(--neon-purple),var(--neon-pink));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  letter-spacing:1px;
+  filter:drop-shadow(0 0 40px rgba(178,108,255,0.5));
+}
+
+.hero p{
+  margin-top:14px;
+  font-size:18px;
+  color:var(--text-muted);
+  max-width:620px;
+}
+
+/* ================== PREMIUM 3D PROFILE CARD ================== */
+.card-wrap{
+  perspective:1400px;
+  display:flex;
+  justify-content:center;
+}
+
+.card3d{
+  width:380px;
+  height:230px;
+  border-radius:24px;
+  position:relative;
+  transform-style:preserve-3d;
+  cursor:grab;
+
+  /* PREMIUM GLASS */
+  background:
+    linear-gradient(145deg,
+      rgba(255,255,255,0.08),
+      rgba(255,255,255,0.02)
+    );
+
+  border:1px solid rgba(255,255,255,0.15);
+
+  /* ENHANCED DEPTH */
+  box-shadow:
+    0 50px 100px rgba(0,0,0,0.9),
+    inset 0 2px 4px rgba(255,255,255,0.08),
+    inset 0 -2px 4px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(0,0,0,0.8);
+
+  transition:all .3s ease;
+  backdrop-filter:blur(25px) saturate(180%);
+}
+
+.card3d:active{cursor:grabbing}
+
+/* ===== PREMIUM NEON GLOW ===== */
+.card3d::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:inherit;
+  background:
+    linear-gradient(120deg,
+      transparent 20%,
+      var(--neon-purple),
+      var(--neon-pink),
+      transparent 80%
+    );
+  filter:blur(16px);
+  opacity:.6;
+  animation:edgeGlow 4s linear infinite;
+  pointer-events:none;
+}
+
+@keyframes edgeGlow{
+  0%{opacity:.3}
+  50%{opacity:.8}
+  100%{opacity:.3}
+}
+
+/* ================== CARD CONTENT ================== */
+.card-inner{
+  position:relative;
+  padding:24px;
+  display:flex;
+  gap:18px;
+  align-items:center;
+}
+
+.avatar{
+  width:95px;
+  height:95px;
+  border-radius:50%;
+  background:url("https://i.ibb.co/ZRdBqYKp/Abrar-Avatar.jpg") center/cover no-repeat;
+  border:3px solid var(--neon-purple);
+  box-shadow:
+    0 0 30px var(--neon-purple),
+    0 0 70px rgba(178,108,255,.8),
+    inset 0 0 10px rgba(0,0,0,0.5);
+  flex-shrink:0;
+}
+
+.card-info h3{
+  margin:0;
+  font-size:24px;
+  font-weight:800;
+}
+
+.card-info p{
+  margin:4px 0;
+  font-size:14px;
+  color:var(--text-muted);
+}
+
+.badge{
+  margin-top:8px;
+  padding:6px 14px;
+  font-size:12px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--neon-purple),var(--neon-cyan));
+  color:#000;
+  font-weight:800;
+  display:inline-block;
+  box-shadow:0 4px 15px rgba(178,108,255,0.5);
+}
+
+.ig{
+  position:absolute;
+  right:18px;
+  bottom:14px;
+  font-size:11px;
+  opacity:.7;
+  color:var(--neon-cyan);
+}
+
+/* ================== SKILLS IN 3D CARD ================== */
+.skills{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
+}
+
+.skill{
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,0.06),
+      rgba(255,255,255,0.02)
+    );
+  border:1px solid rgba(255,255,255,0.1);
+  padding:18px;
+  border-radius:16px;
+  backdrop-filter:blur(15px);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  transition:all 0.3s ease;
+}
+
+.skill:hover{
+  transform:translateY(-3px);
+  border-color:rgba(178,108,255,0.4);
+  box-shadow:
+    0 12px 32px rgba(0,0,0,0.8),
+    0 0 20px rgba(178,108,255,0.3);
+}
+
+.bar{
+  margin-top:10px;
+  width:100%;
+  height:8px;
+  background:rgba(255,255,255,0.05);
+  border-radius:999px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+.bar div{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--neon-purple),var(--neon-pink));
+  border-radius:999px;
+  box-shadow:0 0 10px rgba(178,108,255,0.7);
+  transition:width 1s cubic-bezier(0.23,1,0.32,1);
+}
+
+/* ================== ABOUT SECTION ================== */
+.about{
+  max-width:720px;
+  margin:auto;
+  text-align:center;
+  font-size:17px;
+  line-height:1.75;
+  color:var(--text-muted);
+}
+
+/* ================== FORM IN 3D CARD ================== */
+.form{
+  max-width:540px;
+  margin:auto;
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,0.05),
+      rgba(255,255,255,0.02)
+    );
+  border:1px solid rgba(255,255,255,0.1);
+  padding:28px;
+  border-radius:20px;
+  backdrop-filter:blur(20px);
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.form h3{
+  margin:0 0 18px 0;
+  font-size:22px;
+  background:linear-gradient(90deg,var(--neon-purple),var(--neon-pink));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+input,select,button{
+  width:100%;
+  margin-top:14px;
+  padding:15px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  color:var(--text-main);
+  font-size:14px;
+  backdrop-filter:blur(10px);
+  transition:all 0.3s ease;
+}
+
+input:focus,select:focus{
+  outline:none;
+  border-color:var(--neon-purple);
+  background:rgba(255,255,255,0.06);
+  box-shadow:0 0 15px rgba(178,108,255,0.3);
+}
+
+button{
+  font-weight:800;
+  background:linear-gradient(90deg,var(--neon-purple),var(--neon-pink));
+  color:#000;
+  border:none;
+  cursor:pointer;
+  margin-top:20px;
+  box-shadow:0 6px 20px rgba(178,108,255,0.4);
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 25px rgba(178,108,255,0.6);
+}
+
+/* ================== FOOTER ================== */
+footer{
+  padding:40px 18px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  text-align:center;
+  font-size:14px;
+  color:var(--text-muted);
+  background:rgba(0,0,0,0.5);
+}
+
+footer a{
+  color:var(--neon-cyan);
+  text-decoration:none;
+  transition:color 0.3s ease;
+}
+
+footer a:hover{
+  color:var(--neon-purple);
+}
+
+/* ================== FADE IN ================== */
+.fade{
+  opacity:0;
+  transform:translateY(20px);
+  transition:.6s cubic-bezier(0.23,1,0.32,1);
+}
+.fade.show{
+  opacity:1;
+  transform:none;
+}
+
+/* ================== SECTION HEADERS ================== */
+.section-header{
+  font-size:32px;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:28px;
+  background:linear-gradient(90deg,var(--neon-purple),var(--neon-cyan));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+</style>
+</head>
+
+<body>
+
+
+
+<!-- 3D PROFILE CARD -->
+<section class="card-section fade">
+   <h2 class="section-header">360° Feelable</h2>
+  <div class="card-wrap">
+    <div class="card3d" id="card">
+      <div class="card-inner">
+        <div class="avatar"></div>
+        <div class="card-info">
+          <h3>Abrar Khan</h3>
+          <p>@dev.abrarkhan</p>
+          <p>Full Stack Developer</p>
+          <span class="badge">AI Expert</span>
+        </div>
+      </div>
+      <div class="ig">Tap to open Instagram</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="card-section fade">
+  <h2 class="section-header">Skills & Expertise</h2>
+  <div class="skills">
+    <div class="skill"><span>HTML / CSS / JS</span><div class="bar"><div data-w="96%"></div></div></div>
+    <div class="skill"><span>React</span><div class="bar"><div data-w="80%"></div></div></div>
+    <div class="skill"><span>Git & GitHub</span><div class="bar"><div data-w="85%"></div></div></div>
+    <div class="skill"><span>AI Tools</span><div class="bar"><div data-w="100%"></div></div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="card-section fade">
+  <h2 class="section-header">About Me</h2>
+  <div class="about">
+    I am Abrar Khan from Kendrapara, Odisha — an IT student, certified web developer,
+    and AI expert. I run an agency called <strong>INSTAFORGEX</strong> that delivers
+    professional websites at budget-friendly prices.
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="card-section fade">
+  <h2 class="section-header">Let's Connect</h2>
+  <div class="form">
+    <input type="text" placeholder="Full Name" required>
+    <select id="reason">
+      <option value="">Reason for contact</option>
+      <option value="hire">Hire me as Web Developer</option>
+      <option value="help">Need help with a project</option>
+      <option value="connect">Just want to connect</option>
+    </select>
+    <button onclick="handleSubmit()">Submit</button>
+  </div>
+</section>
+
+<footer>
+  © 2025 Abrar Khan • Powered by <a href="https://devabrarkhan.github.io/instaforgex/" target="_blank">INSTAFORGEX</a>
+</footer>
+
+<script>
+/* ======================================================
+   ABOUT DEVELOPER – PREMIUM 3D CARDS VERSION
+   Author: Abrar Khan
+====================================================== */
+
+/* ========== FADE IN ON LOAD ========== */
+document.querySelectorAll(".fade").forEach((el, i) => {
+  setTimeout(() => el.classList.add("show"), 150 * i);
+});
+
+/* ========== SKILL PROGRESS ANIMATION ========== */
+document.querySelectorAll(".bar div").forEach(bar => {
+  const width = bar.getAttribute("data-w");
+  setTimeout(() => {
+    bar.style.width = width;
+  }, 800);
+});
+
+/* ========== 3D CARD LOGIC ========== */
+const card = document.getElementById("card");
+
+let rotX = 0;
+let rotY = 0;
+let velX = 0;
+let velY = 0;
+let isDragging = false;
+let lastX = 0;
+let lastY = 0;
+let autoRotate = true;
+
+/* ========== PREMIUM SOUND ========== */
+const touchSound = new Audio(
+  "https://cdn.pixabay.com/download/audio/2022/03/15/audio_8c1d7d6d2f.mp3?filename=click-124467.mp3"
+);
+touchSound.volume = 0.12;
+
+/* ========== AUTO ROTATION LOOP ========== */
+function animateCard() {
+  if (!isDragging && autoRotate) {
+    rotY += 0.12;
+  }
+
+  rotX += velX;
+  rotY += velY;
+
+  velX *= 0.92;
+  velY *= 0.92;
+
+  card.style.transform = `
+    rotateX(${rotX}deg)
+    rotateY(${rotY}deg)
+  `;
+
+  updateShadow();
+  requestAnimationFrame(animateCard);
+}
+animateCard();
+
+/* ========== DYNAMIC SHADOW ========== */
+function updateShadow() {
+  const shadowX = rotY * 0.6;
+  const shadowY = rotX * 0.6;
+
+  card.style.boxShadow = `
+    ${-shadowX}px ${shadowY}px 100px rgba(0,0,0,.9),
+    0 0 60px rgba(178,108,255,.5),
+    inset 0 2px 4px rgba(255,255,255,.08),
+    inset 0 -2px 4px rgba(0,0,0,.6)
+  `;
+}
+
+/* ========== MOUSE EVENTS ========== */
+card.addEventListener("mousedown", e => {
+  isDragging = true;
+  autoRotate = false;
+  lastX = e.clientX;
+  lastY = e.clientY;
+  touchSound.play().catch(()=>{});
+});
+
+window.addEventListener("mouseup", () => {
+  isDragging = false;
+  autoRotate = true;
+});
+
+window.addEventListener("mousemove", e => {
+  if (!isDragging) return;
+
+  const dx = e.clientX - lastX;
+  const dy = e.clientY - lastY;
+
+  rotY += dx * 0.45;
+  rotX -= dy * 0.45;
+
+  velY = dx * 0.06;
+  velX = -dy * 0.06;
+
+  lastX = e.clientX;
+  lastY = e.clientY;
+});
+
+/* ========== TOUCH EVENTS ========== */
+card.addEventListener("touchstart", e => {
+  autoRotate = false;
+  isDragging = true;
+  lastX = e.touches[0].clientX;
+  lastY = e.touches[0].clientY;
+  touchSound.play().catch(()=>{});
+}, { passive:true });
+
+card.addEventListener("touchmove", e => {
+  if (!isDragging) return;
+
+  const x = e.touches[0].clientX;
+  const y = e.touches[0].clientY;
+
+  const dx = x - lastX;
+  const dy = y - lastY;
+
+  rotY += dx * 0.5;
+  rotX -= dy * 0.5;
+
+  velY = dx * 0.07;
+  velX = -dy * 0.07;
+
+  lastX = x;
+  lastY = y;
+}, { passive:true });
+
+card.addEventListener("touchend", () => {
+  isDragging = false;
+  autoRotate = true;
+});
+
+/* ========== INSTAGRAM DEEP LINK ========== */
+card.addEventListener("click", () => {
+  const url = /Android|iPhone|iPad/i.test(navigator.userAgent)
+    ? "instagram://user?username=dev.abrarkhan"
+    : "https://www.instagram.com/dev.abrarkhan";
+  window.location.href = url;
+});
+
+/* ========== FORM SUBMIT LOGIC ========== */
+function handleSubmit() {
+  const reason = document.getElementById("reason").value;
+
+  if (!reason) {
+    alert("Please select a reason");
+    return;
+  }
+
+  if (reason === "hire") {
+    window.location.href = "https://forms.gle/dM9BNvkm6x8PBTVq9";
+  }
+  if (reason === "help") {
+    window.location.href = "https://wa.me/919583075623?text=Hello%20Abrar%2C%20I%20want%20a%20website.%20%F0%9F%99%8C%F0%9F%8F%BB%E2%9C%A8";
+  }
+  if (reason === "connect") {
+    window.location.href = "https://www.instagram.com/dev.abrarkhan";
+  }
+}
+</script>
+
+</body>
+</html>
